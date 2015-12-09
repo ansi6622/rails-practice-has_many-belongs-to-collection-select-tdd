@@ -26,4 +26,14 @@ feature 'Toys' do
     expect(page).to have_content(cat3.name)
     expect(page).to have_content(cat4.name)
   end
+
+  scenario 'new should create a new toy and cat ownership and list it on the index' do
+    cat = create_cat
+    visit new_toy_path
+    fill_in "Name", with: "Kitty fishing rod"
+    select cat.name, from: :toy_cat_id
+    click_on "Create Toy"
+    expect(page).to have_content("Kitty fishing rod")
+    expect(page).to have_content(cat.name)
+  end
 end
